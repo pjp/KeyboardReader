@@ -10,6 +10,9 @@ FORWARD =   8
 REVERSE =   2
 
 import math
+import logging
+
+logger = logging.getLogger(__name__)
 
 class InputHandler(object):
 
@@ -59,6 +62,9 @@ class InputHandler(object):
         :param input: A logical movement key value
         :return: A list containing the new left and right motor values
         """
+
+        logger.info("getMotorValues: input [" + input + "]")
+
         ################
         # Generic action
         if input == NOOP:
@@ -83,6 +89,8 @@ class InputHandler(object):
 
         if tLeft or tRight:
             raise Exception("Motor values are invalid")
+
+        logger.info("getMotorValues: output " + [self._current_motor_left_value, self._current_motor_right_value])
 
         return [self._current_motor_left_value, self._current_motor_right_value]
 

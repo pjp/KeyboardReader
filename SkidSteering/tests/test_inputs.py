@@ -3,6 +3,7 @@ __author__ = 'pjp'
 import unittest as ut
 import logging
 import logging.config
+import os, sys
 
 import SkidSteering.InputHandler as IH
 
@@ -11,7 +12,10 @@ class TestInputs(ut.TestCase):
     ######################
     # Initalize the logger
     ######################
-    logging.config.fileConfig('logging.ini')
+    file = sys.argv[0]      # absolute reference to this source
+    this_dir = os.path.dirname(file) # the directory this source lives in
+    config_file = this_dir + '/logging.ini' # Reference to the logging config. file
+    logging.config.fileConfig(config_file, disable_existing_loggers=False)
     ######################
 
     def test_init(self):
