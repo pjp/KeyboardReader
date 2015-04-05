@@ -7,23 +7,30 @@ import os, sys
 
 import SkidSteering.InputHandler as IH
 
+######################
+# Initalize the logger
+######################
+file = __file__      # absolute reference to this source
+this_dir = os.path.dirname(file) # the directory this source lives in
+config_file = this_dir + '/logging.ini' # Reference to the logging config. file
+
+msg = ""
+
+try:
+   logging.config.fileConfig(config_file, disable_existing_loggers = False)
+   msg  =   "Using logging config. file [" + config_file +"]"
+except:
+    msg =   "Cannot find logging config. file [" + config_file +"], defaulting to DEBUG level to stdout"
+    logging.basicConfig(level=logging.DEBUG)
+
+logger = logging.getLogger("SkidSteering.tests.TestInputs")
+
+logger.debug(msg)
+
+######################
+
 class TestInputs(ut.TestCase):
-    ######################
-    # Initalize the logger
-    ######################
-    file = sys.argv[0]      # absolute reference to this source
-    this_dir = os.path.dirname(file) # the directory this source lives in
-    config_file = this_dir + '/logging.ini' # Reference to the logging config. file
 
-    print ("Logging config. file [" + config_file +"]")
-
-    try:
-        logging.config.fileConfig(config_file, disable_existing_loggers = False)
-    except:
-        print ("Cannot find logging config. file [" + config_file +"], defaulting to DEBUG level to stdout")
-        logging.basicConfig(level=logging.DEBUG)
-
-    ######################
 
     def test_init(self):
         ih = IH.InputHandler(0, 100, 20)
