@@ -12,10 +12,8 @@ REVERSE =   2
 import math
 import logging
 
-logger = logging.getLogger(__name__)
 
 class InputHandler(object):
-
     def __init__(self, min_motor_value, max_motor_value, step_value):
         """
         Constructor
@@ -31,6 +29,7 @@ class InputHandler(object):
         forward/back keypress's will move the motor from stopped to full speed in the relevant direction.
 
         """
+        self.logger = logging.getLogger(__name__)
 
         # Sanity checks
 
@@ -63,9 +62,9 @@ class InputHandler(object):
         :return: A list containing the new left and right motor values
         """
 
-        logger.info("getMotorValues: input [" + str(input) + "]")
+        self.logger.info("getMotorValues: input [" + str(input) + "]")
 
-        logger.info("getMotorValues: current L/R" + str([self._current_motor_left_value, self._current_motor_right_value]))
+        self.logger.info("getMotorValues: current L/R" + str([self._current_motor_left_value, self._current_motor_right_value]))
 
         ################
         # Generic action
@@ -92,7 +91,7 @@ class InputHandler(object):
         if tLeft or tRight:
             raise Exception("Motor values are invalid")
 
-        logger.info("getMotorValues: output  L/R" + str([self._current_motor_left_value, self._current_motor_right_value]))
+        self.logger.info("getMotorValues: output  L/R" + str([self._current_motor_left_value, self._current_motor_right_value]))
 
         return [self._current_motor_left_value, self._current_motor_right_value]
 
@@ -106,7 +105,7 @@ class InputHandler(object):
 
         value =  moving and dM == 0.0
 
-        logger.debug("isSpinning: " + str(value))
+        self.logger.debug("isSpinning: " + str(value))
 
         return value
 
@@ -122,7 +121,7 @@ class InputHandler(object):
 
         value   =   moving and dM != 0.0
 
-        logger.debug("isTurning: " + str(value))
+        self.logger.debug("isTurning: " + str(value))
 
         return value
 
@@ -134,7 +133,7 @@ class InputHandler(object):
         """
         value   =    self._current_motor_left_value >= 0 and self._current_motor_right_value >= 0
 
-        logger.debug("isMovingForward: " + str(value))
+        self.logger.debug("isMovingForward: " + str(value))
 
         return value
 
@@ -142,7 +141,7 @@ class InputHandler(object):
     def isMovingInReverse(self):
         value   =    not self.isStopped() and not self.isMovingForward()
 
-        logger.debug("isMovingInReverse: " + str(value))
+        self.logger.debug("isMovingInReverse: " + str(value))
 
         return value
 
@@ -154,7 +153,7 @@ class InputHandler(object):
         """
         value   =    self._current_motor_left_value == 0 and self._current_motor_right_value == 0
 
-        logger.debug("isStopped: " + str(value))
+        self.logger.debug("isStopped: " + str(value))
 
         return value
 
@@ -165,7 +164,7 @@ class InputHandler(object):
         """
         value   =    not self.isStopped()
 
-        logger.debug("isMoving: " + str(value))
+        self.logger.debug("isMoving: " + str(value))
 
         return value
 
@@ -176,7 +175,7 @@ class InputHandler(object):
         :return:
         """
 
-        logger.info("stop:")
+        self.logger.info("stop:")
 
         self._current_motor_left_value      =   self._min_motor_value;
         self._current_motor_right_value     =   self._min_motor_value;
@@ -188,7 +187,7 @@ class InputHandler(object):
         :return:
         """
 
-        logger.info("left:")
+        self.logger.info("left:")
 
         if self.isSpinning() or self.isStopped():
             #########################################################
@@ -261,7 +260,7 @@ class InputHandler(object):
         :return:
         """
 
-        logger.info("right:")
+        self.logger.info("right:")
 
         if self.isSpinning() or self.isStopped():
             #########################################################
@@ -334,7 +333,7 @@ class InputHandler(object):
         :return:
         """
 
-        logger.info("forward:")
+        self.logger.info("forward:")
 
         #####################################
         # Are we near the limits of max speed
@@ -362,7 +361,7 @@ class InputHandler(object):
         :return:
         """
 
-        logger.info("reverse:")
+        self.logger.info("reverse:")
 
         #####################################
         # Are we near the limits of max speed

@@ -18,10 +18,9 @@ class TestInputs(ut.TestCase):
     print ("Logging config. file [" + config_file +"]")
 
     try:
-        logging.config.fileConfig(config_file)
+        logging.config.fileConfig(config_file, disable_existing_loggers = False)
     except:
         print ("Cannot find logging config. file [" + config_file +"], defaulting to DEBUG level to stdout")
-
         logging.basicConfig(level=logging.DEBUG)
 
     ######################
