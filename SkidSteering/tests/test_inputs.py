@@ -7,7 +7,6 @@ import os, sys
 
 import SkidSteering.InputHandler as IH
 
-
 class TestInputs(ut.TestCase):
     ######################
     # Initalize the logger
@@ -15,7 +14,16 @@ class TestInputs(ut.TestCase):
     file = sys.argv[0]      # absolute reference to this source
     this_dir = os.path.dirname(file) # the directory this source lives in
     config_file = this_dir + '/logging.ini' # Reference to the logging config. file
-    logging.config.fileConfig(config_file, disable_existing_loggers=False)
+
+    print ("Logging config. file [" + config_file +"]")
+
+    try:
+        logging.config.fileConfig(config_file)
+    except:
+        print ("Cannot find logging config. file [" + config_file +"], defaulting to DEBUG level to stdout")
+
+        logging.basicConfig(level=logging.DEBUG)
+
     ######################
 
     def test_init(self):
