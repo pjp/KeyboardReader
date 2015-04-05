@@ -352,8 +352,10 @@ class InputHandler(object):
 
         if self.isTurning():
             if(near_limits):
-                # Cannot speed up both motors without affecting the turning radius
-                pass
+                if(near_limit_left):
+                    self._current_motor_right_value = self._current_motor_left_value
+                else:
+                    self._current_motor_left_value  = self._current_motor_right_value
             else:
                 self._current_motor_left_value  = self._current_motor_left_value + self._step_value
                 self._current_motor_right_value = self._current_motor_right_value + self._step_value
@@ -380,8 +382,14 @@ class InputHandler(object):
 
         if self.isTurning():
             if(near_limits):
-                # Cannot speed up both motors without affecting the turning radius
-                pass
+                if(near_limits):
+                    if(near_limit_left):
+                        self._current_motor_right_value = self._current_motor_left_value
+                    else:
+                        self._current_motor_left_value  = self._current_motor_right_value
+                else:
+                    self._current_motor_left_value  = self._current_motor_left_value + self._step_value
+                    self._current_motor_right_value = self._current_motor_right_value + self._step_value
             else:
                 self._current_motor_left_value  = self._current_motor_left_value - self._step_value
                 self._current_motor_right_value = self._current_motor_right_value - self._step_value
