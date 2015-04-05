@@ -1,13 +1,21 @@
 __author__ = 'Paul Pearce'
 
-NOOP    =   0
+################################################################
+# Logical input values to translate to motor speed and direction
+NOOP    =   0   # Use as an input to just get the current values for the left/right motord
 
+#####################################################################
 # Use these so they logically match the numbers on the numeric keypad
 STOP    =   5
 LEFT    =   4
 RIGHT   =   6
 FORWARD =   8
 REVERSE =   2
+
+###################################################################################
+# Use these to extract the left/right motor values from the returned list of values
+LEFT_MOTOR_VALUE_INDEX    =   0
+RIGHT_MOTOR_VALUE_INDEX   =   1;
 
 import math
 import logging
@@ -59,7 +67,8 @@ class InputHandler(object):
         """
         Given the logical input movement key, determine the new left and right (logical) motor values.
         :param input: A logical movement key value
-        :return: A list containing the new left and right motor values
+        :return: A list containing the new left and right motor values - a positive value implies forward movement,
+        a negative value implies a backward movement of the relevant motor, 0 indicates stop.
         """
 
         self.logger.info("input [" + str(input) + "]")
