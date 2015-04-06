@@ -2,20 +2,13 @@ __author__ = 'Paul Pearce'
 
 ################################################################
 # Logical input values to translate to motor speed and direction
-NOOP    =   0   # Use as an input to just get the current values for the left/right motord
-
-#####################################################################
+#
 # Use these so they logically match the numbers on the numeric keypad
 STOP    =   5
-TURN_LEFT    =   4
-TURN_RIGHT   =   6
-MOVE_FORWARD =   8
-MOVE_BACK =   2
-
-###################################################################################
-# Use these to extract the left/right motor values from the returned list of values
-LEFT_MOTOR_VALUE_INDEX    =   0
-RIGHT_MOTOR_VALUE_INDEX   =   1
+LEFT    =   4
+RIGHT   =   6
+FORWARD =   8
+BACK =   2
 
 import math
 import logging
@@ -63,12 +56,10 @@ class InputHandler(object):
 
         self._stop()
 
-    def get_motor_values_after_input(self, input):
+    def move(self, input):
         """
         Given the logical input movement key, determine the new left and right (logical) motor values.
         :param input: A logical movement key value
-        :return: A list containing the new left and right motor values - a positive value implies forward movement,
-        a negative value implies a backward movement of the relevant motor, 0 indicates stop.
         """
 
         self._logger.info("input [" + str(input) + "]")
@@ -77,15 +68,13 @@ class InputHandler(object):
 
         ################
         # Generic action
-        if input == NOOP:
-            pass
-        elif input == TURN_LEFT:
+        if input == LEFT:
             self._turn_left()
-        elif input == TURN_RIGHT:
+        elif input == RIGHT:
             self._turn_right()
-        elif input == MOVE_FORWARD:
+        elif input == FORWARD:
             self._move_forward()
-        elif input == MOVE_BACK:
+        elif input == BACK:
             self._move_back()
         elif input == STOP:
             self._stop()
@@ -102,7 +91,24 @@ class InputHandler(object):
 
         self._logger.info("output  L/R" + str([self._current_motor_left_value, self._current_motor_right_value]))
 
-        return [self._current_motor_left_value, self._current_motor_right_value]
+    def left_motor_value(self):
+        """
+
+        :return: The current left motor value
+        """
+
+        self._logger.debug(self._current_motor_left_value)
+
+        return self._current_motor_left_value
+
+    def right_motor_value(self):
+        """
+
+        :return: The current right motor value
+        """
+        self._logger.debug(self._current_motor_right_value)
+
+        return self._current_motor_right_value
 
     def _is_spinning(self):
         """
