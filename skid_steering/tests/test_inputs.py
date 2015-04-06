@@ -36,8 +36,8 @@ class TestInputs(ut.TestCase):
         ih = IH.InputHandler(0, 100, 20)
 
         self.assertTrue(ih)
-        self.assertFalse(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertFalse(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
     def test_bad_constructor_values(self):
         try:
@@ -93,8 +93,8 @@ class TestInputs(ut.TestCase):
         self.assertTrue(stop)
         self.assertEqual(0, stop[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(0, stop[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertFalse(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertFalse(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
     def test_move_forward(self):
         ih = IH.InputHandler(0, 25, 10)
@@ -102,19 +102,19 @@ class TestInputs(ut.TestCase):
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(10, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(10, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
+        self.assertTrue(ih._is_moving())
 
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
     def test_move_back(self):
         ih = IH.InputHandler(0, 25, 10)
@@ -122,20 +122,20 @@ class TestInputs(ut.TestCase):
         values = ih.get_motor_values_after_input(IH.MOVE_BACK)
         self.assertEqual(-10, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(-10, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_BACK)
         self.assertEqual(-20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(-20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_BACK)
         self.assertEqual(-20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(-20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
     def test_move_forward_boundary_check(self):
         ih = IH.InputHandler(0, 30, 10)
@@ -143,25 +143,25 @@ class TestInputs(ut.TestCase):
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(10, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(10, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
+        self.assertTrue(ih._is_moving())
 
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(30, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(30, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(30, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(30, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
     def test_move_back_boundary_check(self):
         ih = IH.InputHandler(0, 30, 10)
@@ -169,26 +169,26 @@ class TestInputs(ut.TestCase):
         values = ih.get_motor_values_after_input(IH.MOVE_BACK)
         self.assertEqual(-10, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(-10, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_BACK)
         self.assertEqual(-20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(-20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_BACK)
         self.assertEqual(-30, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(-30, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_BACK)
         self.assertEqual(-30, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(-30, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
     def test_move_forward_boundary_check(self):
         ih = IH.InputHandler(0, 30, 10)
@@ -196,25 +196,25 @@ class TestInputs(ut.TestCase):
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(10, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(10, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
+        self.assertTrue(ih._is_moving())
 
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(30, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(30, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(30, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(30, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
     def test_move_forward_boundary_check_2(self):
         ih = IH.InputHandler(0, 29, 10)
@@ -222,19 +222,19 @@ class TestInputs(ut.TestCase):
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(10, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(10, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
+        self.assertTrue(ih._is_moving())
 
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
     def test_move_back_boundary_check_2(self):
         ih = IH.InputHandler(0, 29, 10)
@@ -242,20 +242,20 @@ class TestInputs(ut.TestCase):
         values = ih.get_motor_values_after_input(IH.MOVE_BACK)
         self.assertEqual(-10, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(-10, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_BACK)
         self.assertEqual(-20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(-20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_BACK)
         self.assertEqual(-20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(-20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
     def test_move_forward_boundary_check_3(self):
         ih = IH.InputHandler(0, 31, 10)
@@ -263,25 +263,25 @@ class TestInputs(ut.TestCase):
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(10, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(10, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
+        self.assertTrue(ih._is_moving())
 
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(30, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(30, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(30, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(30, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
     def test_move_back_boundary_check_3(self):
         ih = IH.InputHandler(0, 31, 10)
@@ -289,26 +289,26 @@ class TestInputs(ut.TestCase):
         values = ih.get_motor_values_after_input(IH.MOVE_BACK)
         self.assertEqual(-10, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(-10, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_BACK)
         self.assertEqual(-20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(-20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_BACK)
         self.assertEqual(-30, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(-30, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_BACK)
         self.assertEqual(-30, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(-30, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
     def test_move_forward_back(self):
         ih = IH.InputHandler(0, 25, 10)
@@ -317,47 +317,47 @@ class TestInputs(ut.TestCase):
         # two forward, one back
         ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         ih.get_motor_values_after_input(IH.MOVE_FORWARD)
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_BACK)
 
         self.assertEqual(10, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(10, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         ########################
         # two back
         ih.get_motor_values_after_input(IH.MOVE_BACK)
         ih.get_motor_values_after_input(IH.MOVE_BACK)
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.NOOP)
 
         self.assertEqual(-10, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(-10, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         ########################
         # four forward
         ih.get_motor_values_after_input(IH.MOVE_FORWARD)
-        self.assertFalse(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertFalse(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
         ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         ih.get_motor_values_after_input(IH.MOVE_FORWARD)
-        self.assertFalse(ih.is_turning())
+        self.assertFalse(ih._is_turning())
 
         values = ih.get_motor_values_after_input(IH.NOOP)
 
         self.assertEqual(20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
-        self.assertFalse(ih.is_turning())
+        self.assertTrue(ih._is_moving())
+        self.assertFalse(ih._is_turning())
 
     def test_spin_left(self):
         ih = IH.InputHandler(0, 25, 10)
@@ -374,7 +374,7 @@ class TestInputs(ut.TestCase):
         self.assertEqual(-20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
 
-        self.assertTrue(ih.is_spinning())
+        self.assertTrue(ih._is_spinning())
 
     def test_spin_left_then_straight_forward(self):
         ih = IH.InputHandler(0, 25, 10)
@@ -391,13 +391,13 @@ class TestInputs(ut.TestCase):
         self.assertEqual(-20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
 
-        self.assertTrue(ih.is_spinning())
+        self.assertTrue(ih._is_spinning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(0, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(0, values[IH.RIGHT_MOTOR_VALUE_INDEX])
 
-        self.assertFalse(ih.is_spinning())
+        self.assertFalse(ih._is_spinning())
 
     def test_spin_left_then_straight_back(self):
         ih = IH.InputHandler(0, 25, 10)
@@ -414,13 +414,13 @@ class TestInputs(ut.TestCase):
         self.assertEqual(-20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
 
-        self.assertTrue(ih.is_spinning())
+        self.assertTrue(ih._is_spinning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_BACK)
         self.assertEqual(0, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(0, values[IH.RIGHT_MOTOR_VALUE_INDEX])
 
-        self.assertFalse(ih.is_spinning())
+        self.assertFalse(ih._is_spinning())
 
     def test_turn_forward_left(self):
         ih = IH.InputHandler(0, 35, 10)
@@ -551,7 +551,7 @@ class TestInputs(ut.TestCase):
         self.assertEqual(20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(-20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
 
-        self.assertTrue(ih.is_spinning())
+        self.assertTrue(ih._is_spinning())
 
     def test_spin_right_then_straight_forward(self):
         ih = IH.InputHandler(0, 25, 10)
@@ -568,13 +568,13 @@ class TestInputs(ut.TestCase):
         self.assertEqual(20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(-20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
 
-        self.assertTrue(ih.is_spinning())
+        self.assertTrue(ih._is_spinning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_FORWARD)
         self.assertEqual(0, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(0, values[IH.RIGHT_MOTOR_VALUE_INDEX])
 
-        self.assertFalse(ih.is_spinning())
+        self.assertFalse(ih._is_spinning())
 
     def test_spin_right_then_straight_back(self):
         ih = IH.InputHandler(0, 25, 10)
@@ -591,13 +591,13 @@ class TestInputs(ut.TestCase):
         self.assertEqual(20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(-20, values[IH.RIGHT_MOTOR_VALUE_INDEX])
 
-        self.assertTrue(ih.is_spinning())
+        self.assertTrue(ih._is_spinning())
 
         values = ih.get_motor_values_after_input(IH.MOVE_BACK)
         self.assertEqual(0, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(0, values[IH.RIGHT_MOTOR_VALUE_INDEX])
 
-        self.assertFalse(ih.is_spinning())
+        self.assertFalse(ih._is_spinning())
 
     def test_turn_forward_right(self):
         ih = IH.InputHandler(0, 35, 10)
@@ -735,13 +735,13 @@ class TestInputs(ut.TestCase):
         values = ih.get_motor_values_after_input(IH.TURN_LEFT)
         self.assertEqual(10, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(-10, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_spinning())
+        self.assertTrue(ih._is_spinning())
 
         values = ih.get_motor_values_after_input(IH.TURN_LEFT)
         self.assertEqual(0, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(0, values[IH.RIGHT_MOTOR_VALUE_INDEX])
 
-        self.assertFalse(ih.is_spinning())
+        self.assertFalse(ih._is_spinning())
 
 
     def test_stop(self):
@@ -754,9 +754,9 @@ class TestInputs(ut.TestCase):
         values = ih.get_motor_values_after_input(IH.TURN_RIGHT)
         self.assertEqual(20, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(10, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_moving())
+        self.assertTrue(ih._is_moving())
 
         values = ih.get_motor_values_after_input(IH.STOP)
         self.assertEqual(0, values[IH.LEFT_MOTOR_VALUE_INDEX])
         self.assertEqual(0, values[IH.RIGHT_MOTOR_VALUE_INDEX])
-        self.assertTrue(ih.is_stopped())
+        self.assertTrue(ih._is_stopped())

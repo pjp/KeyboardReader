@@ -37,7 +37,7 @@ class InputHandler(object):
 
         """
 
-        self.logger = logging.getLogger("SkidSteering.InputHandler")
+        self._logger = logging.getLogger("SkidSteering.InputHandler")
 
         # Sanity checks
 
@@ -61,7 +61,7 @@ class InputHandler(object):
         self._current_motor_left_value     =   0
         self._current_motor_right_value    =   0
 
-        self.stop()
+        self._stop()
 
     def get_motor_values_after_input(self, input):
         """
@@ -71,24 +71,24 @@ class InputHandler(object):
         a negative value implies a backward movement of the relevant motor, 0 indicates stop.
         """
 
-        self.logger.info("input [" + str(input) + "]")
+        self._logger.info("input [" + str(input) + "]")
 
-        self.logger.info("current L/R" + str([self._current_motor_left_value, self._current_motor_right_value]))
+        self._logger.info("current L/R" + str([self._current_motor_left_value, self._current_motor_right_value]))
 
         ################
         # Generic action
         if input == NOOP:
             pass
         elif input == TURN_LEFT:
-            self.turn_left()
+            self._turn_left()
         elif input == TURN_RIGHT:
-            self.turn_right()
+            self._turn_right()
         elif input == MOVE_FORWARD:
-            self.move_forward()
+            self._move_forward()
         elif input == MOVE_BACK:
-            self.move_back()
+            self._move_back()
         elif input == STOP:
-            self.stop()
+            self._stop()
         else:
             raise Exception("Invalid input")
 
@@ -100,105 +100,105 @@ class InputHandler(object):
         if tLeft or tRight:
             raise Exception("Motor values are invalid")
 
-        self.logger.info("output  L/R" + str([self._current_motor_left_value, self._current_motor_right_value]))
+        self._logger.info("output  L/R" + str([self._current_motor_left_value, self._current_motor_right_value]))
 
         return [self._current_motor_left_value, self._current_motor_right_value]
 
-    def is_spinning(self):
+    def _is_spinning(self):
         """
         Determine if the vehicle is spinning on the spot
         :return:
         """
-        moving  =  self.is_moving()
+        moving  =  self._is_moving()
         dM      =   math.fabs(self._current_motor_left_value + self._current_motor_right_value)
 
         value =  moving and dM == 0.0
 
-        self.logger.debug(str(value))
+        self._logger.debug(str(value))
 
         return value
 
 
-    def is_turning(self):
+    def _is_turning(self):
         """
         Determine if the vehicle should be turning based on the current motor values
         :return: true if turning; else false
         """
 
-        moving  =       self.is_moving()
+        moving  =       self._is_moving()
         dM      =       (self._current_motor_left_value - self._current_motor_right_value)
 
         value   =   moving and dM != 0.0
 
-        self.logger.debug(str(value))
+        self._logger.debug(str(value))
 
         return value
 
 
-    def is_moving_forward(self):
+    def _is_moving_forward(self):
         """
         Determine if we are actually moving forward
         :return:
         """
         value   =    self._current_motor_left_value >= 0 and self._current_motor_right_value >= 0
 
-        self.logger.debug(str(value))
+        self._logger.debug(str(value))
 
         return value
 
 
-    def is_moving_back(self):
+    def _is_moving_back(self):
         value   =    self._current_motor_left_value < 0 and self._current_motor_right_value < 0
 
-        self.logger.debug(str(value))
+        self._logger.debug(str(value))
 
         return value
 
 
-    def is_stopped(self):
+    def _is_stopped(self):
         """
 
         :return:
         """
         value   =    self._current_motor_left_value == 0 and self._current_motor_right_value == 0
 
-        self.logger.debug(str(value))
+        self._logger.debug(str(value))
 
         return value
 
-    def is_moving(self):
+    def _is_moving(self):
         """
 
         :return:
         """
-        value   =    not self.is_stopped()
+        value   =    not self._is_stopped()
 
-        self.logger.debug(str(value))
+        self._logger.debug(str(value))
 
         return value
 
-    def stop(self):
+    def _stop(self):
 
         """
         Set motor value to stop the vehicle motors
         :return:
         """
 
-        self.logger.info("Entering")
+        self._logger.info("Entering")
 
         self._current_motor_left_value      =   self._min_motor_value
         self._current_motor_right_value     =   self._min_motor_value
 
 
-    def turn_left(self):
+    def _turn_left(self):
         """
         Determine the motor values to turn the vehicle left
         :return:
         """
 
-        self.logger.info("Entering")
+        self._logger.info("Entering")
 
-        if self.is_spinning() or self.is_stopped():
+        if self._is_spinning() or self._is_stopped():
             #########################################################
             # Are we near the limits of max speed in either direction
             target_left_value     = self._current_motor_left_value - self._step_value
@@ -230,7 +230,7 @@ class InputHandler(object):
                 # slow down left motor
                 self._current_motor_left_value  = self._current_motor_left_value - self._step_value
 
-        elif self.is_moving_forward():
+        elif self._is_moving_forward():
             #########################################################
             # Are we near the limits of max speed in either direction
             near_limit_left     = (self._current_motor_left_value - self._step_value) <= 0
@@ -245,7 +245,7 @@ class InputHandler(object):
             else:
                 pass
 
-        elif self.is_moving_back():
+        elif self._is_moving_back():
             #########################################################
             # Are we near the limits of max speed in either direction
             near_limit_left    = (self._current_motor_left_value + self._step_value) >= 0
@@ -263,15 +263,15 @@ class InputHandler(object):
             raise Exception("Unknown state when turning Left")
 
 
-    def turn_right(self):
+    def _turn_right(self):
         """
         Determine the motor values to turn the vehicle right
         :return:
         """
 
-        self.logger.info("Entering")
+        self._logger.info("Entering")
 
-        if self.is_spinning() or self.is_stopped():
+        if self._is_spinning() or self._is_stopped():
             #########################################################
             # Are we near the limits of max speed in either direction
             target_left_value     = self._current_motor_left_value + self._step_value
@@ -303,7 +303,7 @@ class InputHandler(object):
                 # slow down right motor
                 self._current_motor_right_value  = self._current_motor_right_value - self._step_value
 
-        elif self.is_moving_forward():
+        elif self._is_moving_forward():
             #########################################################
             # Are we near the limits of max speed in either direction
             near_limit_right     = (self._current_motor_right_value - self._step_value) <= 0
@@ -318,7 +318,7 @@ class InputHandler(object):
             else:
                 pass
 
-        elif self.is_moving_back():
+        elif self._is_moving_back():
             #########################################################
             # Are we near the limits of max speed in either direction
             near_limit_right    = (self._current_motor_right_value + self._step_value) >= 0
@@ -336,13 +336,13 @@ class InputHandler(object):
             raise Exception("Unknown state when turning Right")
 
 
-    def move_forward(self):
+    def _move_forward(self):
         """
         Determine the motor values to move the vehicle forward
         :return:
         """
 
-        self.logger.info("Entering")
+        self._logger.info("Entering")
 
         #####################################
         # Are we near the limits of max speed
@@ -350,8 +350,8 @@ class InputHandler(object):
         near_limit_right  = (self._current_motor_right_value + self._step_value) > self._max_motor_value
         near_limits      =  near_limit_left or near_limit_right
 
-        if self.is_turning():
-            if self.is_moving_forward():
+        if self._is_turning():
+            if self._is_moving_forward():
                 if(near_limits):
                     if(near_limit_left):
                         self._current_motor_right_value = self._current_motor_left_value
@@ -361,8 +361,8 @@ class InputHandler(object):
                     self._current_motor_left_value  = self._current_motor_left_value + self._step_value
                     self._current_motor_right_value = self._current_motor_right_value + self._step_value
             else:
-                if self.is_spinning():
-                    self.stop()
+                if self._is_spinning():
+                    self._stop()
                 else:
                     # Just make the two motor values the same (pick the largest value)
                     if math.fabs(self._current_motor_left_value) > math.fabs(self._current_motor_right_value):
@@ -377,13 +377,13 @@ class InputHandler(object):
                 self._current_motor_left_value  = self._current_motor_left_value + self._step_value
                 self._current_motor_right_value = self._current_motor_right_value + self._step_value
 
-    def move_back(self):
+    def _move_back(self):
         """
         Determine the motor values to move the vehicle backwards
         :return:
         """
 
-        self.logger.info("Entering")
+        self._logger.info("Entering")
 
         #####################################
         # Are we near the limits of max speed
@@ -391,8 +391,8 @@ class InputHandler(object):
         near_limit_right    = (self._current_motor_right_value - self._step_value) < (self._max_motor_value * -1)
         near_limits         = near_limit_left or near_limit_right
 
-        if self.is_turning():
-            if self.is_moving_back():
+        if self._is_turning():
+            if self._is_moving_back():
                 if(near_limits):
                     if(near_limits):
                         if(near_limit_left):
@@ -406,8 +406,8 @@ class InputHandler(object):
                     self._current_motor_left_value  = self._current_motor_left_value - self._step_value
                     self._current_motor_right_value = self._current_motor_right_value - self._step_value
             else:
-                if self.is_spinning():
-                    self.stop()
+                if self._is_spinning():
+                    self._stop()
                 else:
                     # Just make the two motor values the same (pick the largest value)
                     if math.fabs(self._current_motor_left_value) > math.fabs(self._current_motor_right_value):
