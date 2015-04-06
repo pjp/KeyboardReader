@@ -87,7 +87,7 @@ class InputHandler(object):
         tRight  =   self._current_motor_left_value != 0 and self._current_motor_right_value == 0
 
         if tLeft or tRight:
-            raise Exception("Motor values are invalid")
+            raise Exception("Internal consistancy check failure - Motor values are invalid - one motor is stationery")
 
         self._logger.info("output  L/R" + str([self._current_motor_left_value, self._current_motor_right_value]))
 
