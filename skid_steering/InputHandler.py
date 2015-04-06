@@ -62,9 +62,9 @@ class InputHandler(object):
         :param input: A logical movement key value
         """
 
-        self._logger.info("input [" + str(input) + "]")
+        self._logger.info("Current L/R" + str([self._current_motor_left_value, self._current_motor_right_value]))
 
-        self._logger.info("current L/R" + str([self._current_motor_left_value, self._current_motor_right_value]))
+        self._logger.info("input [" + str(input) + "]")
 
         ################
         # Generic action
@@ -81,6 +81,8 @@ class InputHandler(object):
         else:
             raise Exception("Invalid input")
 
+        self._logger.info("Latest  L/R" + str([self._current_motor_left_value, self._current_motor_right_value]))
+
         #############################################################################
         # Sanity checks - cannot have one motor moving while another motor stationery
         tLeft   =   self._current_motor_left_value == 0 and self._current_motor_right_value != 0
@@ -89,7 +91,6 @@ class InputHandler(object):
         if tLeft or tRight:
             raise Exception("Internal consistancy check failure - Motor values are invalid - one motor is stationery")
 
-        self._logger.info("output  L/R" + str([self._current_motor_left_value, self._current_motor_right_value]))
 
     def left_motor_value(self):
         """
