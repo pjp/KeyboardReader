@@ -958,3 +958,114 @@ class TestInputs(ut.TestCase):
         ih.move(IH.RIGHT)
         self.assertEqual(-30, ih.left_motor_value())
         self.assertEqual(-10, ih.right_motor_value())
+
+    #############################################################
+    #
+    #############################################################
+    def test_forward_then_turn_left_and_right(self):
+        ih = IH.InputHandler(0, 35, 10)
+
+        ih.move(IH.FORWARD)
+        self.assertEqual(10, ih.left_motor_value())
+        self.assertEqual(10, ih.right_motor_value())
+
+        ih.move(IH.LEFT)
+        self.assertEqual(10, ih.left_motor_value())
+        self.assertEqual(20, ih.right_motor_value())
+
+        ih.move(IH.RIGHT)
+        self.assertEqual(20, ih.left_motor_value())
+        self.assertEqual(20, ih.right_motor_value())
+
+        ih.move(IH.LEFT)
+        self.assertEqual(20, ih.left_motor_value())
+        self.assertEqual(30, ih.right_motor_value())
+
+        ih.move(IH.RIGHT)
+        self.assertEqual(30, ih.left_motor_value())
+        self.assertEqual(30, ih.right_motor_value())
+
+        ih.move(IH.LEFT)
+        self.assertEqual(20, ih.left_motor_value())
+        self.assertEqual(30, ih.right_motor_value())
+
+    def test_forward_then_turn_right_and_left(self):
+        ih = IH.InputHandler(0, 35, 10)
+
+        ih.move(IH.FORWARD)
+        self.assertEqual(10, ih.left_motor_value())
+        self.assertEqual(10, ih.right_motor_value())
+
+        ih.move(IH.RIGHT)
+        self.assertEqual(20, ih.left_motor_value())
+        self.assertEqual(10, ih.right_motor_value())
+
+        ih.move(IH.LEFT)
+        self.assertEqual(20, ih.left_motor_value())
+        self.assertEqual(20, ih.right_motor_value())
+
+        ih.move(IH.RIGHT)
+        self.assertEqual(30, ih.left_motor_value())
+        self.assertEqual(20, ih.right_motor_value())
+
+        ih.move(IH.LEFT)
+        self.assertEqual(30, ih.left_motor_value())
+        self.assertEqual(30, ih.right_motor_value())
+
+        ih.move(IH.RIGHT)
+        self.assertEqual(30, ih.left_motor_value())
+        self.assertEqual(20, ih.right_motor_value())
+
+    def test_back_then_turn_left_and_right(self):
+        ih = IH.InputHandler(0, 35, 10)
+
+        ih.move(IH.BACK)
+        self.assertEqual(-10, ih.left_motor_value())
+        self.assertEqual(-10, ih.right_motor_value())
+
+        ih.move(IH.LEFT)
+        self.assertEqual(-10, ih.left_motor_value())
+        self.assertEqual(-20, ih.right_motor_value())
+
+        ih.move(IH.RIGHT)
+        self.assertEqual(-20, ih.left_motor_value())
+        self.assertEqual(-20, ih.right_motor_value())
+
+        ih.move(IH.LEFT)
+        self.assertEqual(-20, ih.left_motor_value())
+        self.assertEqual(-30, ih.right_motor_value())
+
+        ih.move(IH.RIGHT)
+        self.assertEqual(-30, ih.left_motor_value())
+        self.assertEqual(-30, ih.right_motor_value())
+
+        ih.move(IH.LEFT)
+        self.assertEqual(-20, ih.left_motor_value())
+        self.assertEqual(-30, ih.right_motor_value())
+
+    def test_back_then_turn_right_and_left(self):
+        ih = IH.InputHandler(0, 35, 10)
+
+        ih.move(IH.BACK)
+        self.assertEqual(-10, ih.left_motor_value())
+        self.assertEqual(-10, ih.right_motor_value())
+
+        ih.move(IH.RIGHT)
+        self.assertEqual(-20, ih.left_motor_value())
+        self.assertEqual(-10, ih.right_motor_value())
+
+        ih.move(IH.LEFT)
+        self.assertEqual(-20, ih.left_motor_value())
+        self.assertEqual(-20, ih.right_motor_value())
+
+        ih.move(IH.RIGHT)
+        self.assertEqual(-30, ih.left_motor_value())
+        self.assertEqual(-20, ih.right_motor_value())
+
+        ih.move(IH.LEFT)
+        self.assertEqual(-30, ih.left_motor_value())
+        self.assertEqual(-30, ih.right_motor_value())
+
+        ih.move(IH.RIGHT)
+        self.assertEqual(-30, ih.left_motor_value())
+        self.assertEqual(-20, ih.right_motor_value())
