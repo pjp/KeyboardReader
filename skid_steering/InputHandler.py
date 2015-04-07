@@ -401,14 +401,10 @@ class InputHandler(object):
         if self._is_turning():
             if self._is_moving_back():
                 if(near_limits):
-                    if(near_limits):
-                        if(near_limit_left):
-                            self._current_motor_right_value = self._current_motor_left_value
-                        else:
-                            self._current_motor_left_value  = self._current_motor_right_value
+                    if(near_limit_left):
+                        self._current_motor_right_value = self._current_motor_left_value
                     else:
-                        self._current_motor_left_value  = self._current_motor_left_value + self._step_value
-                        self._current_motor_right_value = self._current_motor_right_value + self._step_value
+                        self._current_motor_left_value  = self._current_motor_right_value
                 else:
                     self._current_motor_left_value  = self._current_motor_left_value - self._step_value
                     self._current_motor_right_value = self._current_motor_right_value - self._step_value
