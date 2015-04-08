@@ -141,6 +141,19 @@ class InputHandler(object):
 
         return value
 
+    def _is_turning_left(self):
+        value = self._current_motor_left_value < self._current_motor_right_value
+
+        self._logger.debug(str(value))
+
+        return value
+
+    def _is_turning_right(self):
+        value = self._current_motor_right_value < self._current_motor_left_value
+
+        self._logger.debug(str(value))
+
+        return value
 
     def _is_moving_forward(self):
         """
@@ -357,7 +370,9 @@ class InputHandler(object):
         near_limit_right  = (self._current_motor_right_value + self._step_value) > self._max_motor_value
         near_limits      =  near_limit_left or near_limit_right
 
-        if self._is_turning():
+        if self._is_spinning():
+            self._stop()
+        elif self._is_turning():
             if self._is_moving_forward():
                 if(near_limits):
                     if(near_limit_left):
@@ -365,18 +380,15 @@ class InputHandler(object):
                     else:
                         self._current_motor_left_value  = self._current_motor_right_value
                 else:
-                    self._current_motor_left_value  = self._current_motor_left_value + self._step_value
-                    self._current_motor_right_value = self._current_motor_right_value + self._step_value
-            else:
-                if self._is_spinning():
-                    self._stop()
-                else:
-                    # Just make the two motor values the same (pick the largest value)
-                    if math.fabs(self._current_motor_left_value) > math.fabs(self._current_motor_right_value):
-                        self._current_motor_right_value = self._current_motor_left_value
-                    else:
+                    if self._is_turning_left():
                         self._current_motor_left_value  = self._current_motor_right_value
-
+                    else:
+                        self._current_motor_right_value = self._current_motor_left_value
+            else:
+                if self._is_turning_left():
+                    self._current_motor_left_value  = self._current_motor_right_value
+                else:
+                    self._current_motor_right_value = self._current_motor_left_value
         else:
             if(near_limits):
                 pass
@@ -398,7 +410,9 @@ class InputHandler(object):
         near_limit_right    = (self._current_motor_right_value - self._step_value) < (self._max_motor_value * -1)
         near_limits         = near_limit_left or near_limit_right
 
-        if self._is_turning():
+        if self._is_spinning():
+            self._stop()
+        elif self._is_turning():
             if self._is_moving_back():
                 if(near_limits):
                     if(near_limit_left):
@@ -406,17 +420,15 @@ class InputHandler(object):
                     else:
                         self._current_motor_left_value  = self._current_motor_right_value
                 else:
-                    self._current_motor_left_value  = self._current_motor_left_value - self._step_value
-                    self._current_motor_right_value = self._current_motor_right_value - self._step_value
-            else:
-                if self._is_spinning():
-                    self._stop()
-                else:
-                    # Just make the two motor values the same (pick the largest value)
-                    if math.fabs(self._current_motor_left_value) > math.fabs(self._current_motor_right_value):
+                    if self._is_turning_left():
                         self._current_motor_right_value = self._current_motor_left_value
                     else:
                         self._current_motor_left_value  = self._current_motor_right_value
+            else:
+                if self._is_turning_left():
+                    self._current_motor_right_value = self._current_motor_left_value
+                else:
+                    self._current_motor_left_value  = self._current_motor_right_value
         else:
             if(near_limits):
                 pass
