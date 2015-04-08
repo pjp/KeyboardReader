@@ -231,18 +231,6 @@ class InputHandler(object):
 
             if near_limit_left and near_limit_right:
                 pass
-            elif near_limit_left and not near_limit_right:
-                # speed up right motor
-                self._current_motor_right_value = target_right_value
-
-                # slow down left motor
-                self._current_motor_left_value  = target_left_value
-            elif near_limit_right and not near_limit_left:
-                # slow down right motor
-                self._current_motor_right_value = self._current_motor_right_value - self._step_value
-
-                # speed up left motor
-                self._current_motor_left_value  = self._current_motor_left_value + self._step_value
             else:
                 # speed up right motor
                 self._current_motor_right_value = self._current_motor_right_value + self._step_value
@@ -304,18 +292,6 @@ class InputHandler(object):
 
             if near_limit_left and near_limit_right:
                 pass
-            elif near_limit_right and not near_limit_left:
-                # speed up left motor
-                self._current_motor_left_value = target_left_value
-
-                # slow down right motor
-                self._current_motor_right_value  = target_right_value
-            elif near_limit_left and not near_limit_right:
-                # slow down left motor
-                self._current_motor_left_value = self._current_motor_left_value - self._step_value
-
-                # speed up right motor
-                self._current_motor_right_value  = self._current_motor_right_value + self._step_value
             else:
                 # speed up left motor
                 self._current_motor_left_value = self._current_motor_left_value + self._step_value
