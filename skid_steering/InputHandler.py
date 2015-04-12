@@ -60,11 +60,37 @@ class InputHandler(object):
         """
         Given the logical input movement key, determine the new left and right (logical) motor values.
         :param input: A logical movement key value
+
+        Below are some of the actions performed when the vehicle is in various states
+
+        Vehicle State                       Key         Action
+        =============                       ===         ======
+        ANY                                 STOP        Vehicle will stop
+
+        Stationary                          FORWARD     Move forward (straight ahead) slowly
+        Stationary                          BACK        Move back slowly
+        Stationary                          LEFT        Spin left slowly
+        Stationary                          RIGHT       Spin right slowly
+
+        Moving forward                      FORWARD     Move forward (straight ahead) more quickly
+        Moving forward                      BACK        Stop
+        Moving forward                      LEFT        Turn to the left
+        Moving forward                      RIGHT       Turn to the right
+
+        Moving forward and Turning left     FORWARD     Move forward (straight ahead) at the speed of the right (faster) track
+        Moving forward and Turning left     BACK        Move forward (straight ahead) at the speed of the left (slower) track
+        Moving forward and Turning left     LEFT        Turn left more quickly
+        Moving forward and Turning left     RIGHT       same as FORWARD
+
+
+        From the above, all the other states and actions can be inferred.
+
         """
+        initialMotorValues = "L/R" + str([self._current_motor_left_value, self._current_motor_right_value])
 
-        self._logger.info("Current L/R" + str([self._current_motor_left_value, self._current_motor_right_value]))
+        self._logger.info("Initial motor values: " + initialMotorValues)
 
-        self._logger.info("input [" + str(input) + "]")
+        self._logger.info("Input: [" + str(input) + "]")
 
         ################
         # Generic action
@@ -79,17 +105,24 @@ class InputHandler(object):
         elif input == STOP:
             self._stop()
         else:
-            raise Exception("Invalid input")
+            raise Exception("Invalid input: " + "[" + str(input) + "]")
 
-        self._logger.info("Latest  L/R" + str([self._current_motor_left_value, self._current_motor_right_value]))
+        currentMotorValues = "L/R" + str([self._current_motor_left_value, self._current_motor_right_value])
+
+        self._logger.info("Current motor values: " + currentMotorValues)
 
         #############################################################################
         # Sanity checks - cannot have one motor moving while another motor stationery
-        tLeft   =   self._current_motor_left_value == 0 and self._current_motor_right_value != 0
-        tRight  =   self._current_motor_left_value != 0 and self._current_motor_right_value == 0
+        problem_left_motor_speed   =   self._current_motor_left_value == 0 and self._current_motor_right_value != 0
+        problem_right_motor_speed  =   self._current_motor_left_value != 0 and self._current_motor_right_value == 0
 
-        if tLeft or tRight:
-            raise Exception("Internal consistancy check failure - Motor values are invalid - one motor is stationery")
+        if problem_left_motor_speed or problem_right_motor_speed:
+            errorMessage = "Internal consistancy check failure - Motor values are invalid - one motor is stationery:"
+            errorMessage = errorMessage + " Initial motor values: " + initialMotorValues
+            errorMessage = errorMessage + " Input: " + "[" + str(input) + "]"
+            errorMessage = errorMessage + " Current motor values: " + currentMotorValues
+
+            raise Exception(errorMessage)
 
 
     def left_motor_value(self):
@@ -411,5 +444,4 @@ class InputHandler(object):
             else:
                 self._current_motor_left_value  = self._current_motor_left_value - self._step_value
                 self._current_motor_right_value = self._current_motor_right_value - self._step_value
-
 
