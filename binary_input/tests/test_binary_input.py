@@ -4,6 +4,8 @@ import logging
 import logging.config
 import os
 
+import binary_input.BinaryInput as BI
+
 file = __file__      # absolute reference to this source
 this_dir = os.path.dirname(file) # the directory this source lives in
 config_file = this_dir + '/logging.ini' # Reference to the logging config. file
@@ -26,4 +28,9 @@ logger.debug(msg)
 class BinaryInputs(ut.TestCase):
 
     def test_init(self):
-        pass
+        bi = BI.BinaryInput()
+
+        action = bi.input(True)
+
+        self.assertEquals(BI.NO_OP, action)
+
