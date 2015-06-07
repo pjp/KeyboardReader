@@ -19,14 +19,14 @@ class InputHandler(object):
         Constructor
         :param min_motor_value: The value to stop the motor turning.
         :param max_motor_value: The value value to spin the motor at max. speed
-        :param step_value: How many increment each key press will move the motor value up or down. It is assumed that
+        :param step_value: How many increment each move input will change the motor speed up or down. It is assumed that
         the same range will be valid for reversing a motor.
         :return:
 
         Example ih = IH.InputHandler(0, 100, 20)
 
         The logical motors can handle a range of -100 to +100 (full reverse to full forward), and 5 (100/20)
-        forward/back keypress's will move the motor from stopped to full speed in the relevant direction.
+        forward/back move inputs will change the motor speed from stopped to full speed in the relevant direction.
 
         """
 
