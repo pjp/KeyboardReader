@@ -263,6 +263,7 @@ class InputHandler(object):
             near_limit_right    = target_right_value >= self._max_motor_value
 
             if near_limit_left and near_limit_right:
+                self._logger.warn("_is_spinning: Near left & right limits")
                 pass
             else:
                 # speed up right motor
@@ -284,6 +285,7 @@ class InputHandler(object):
                 # slow down left motor
                 self._current_motor_left_value  = self._current_motor_left_value - self._step_value
             else:
+                self._logger.warn("_is_moving_forward: Near limits")
                 pass
 
         elif self._is_moving_back():
@@ -299,9 +301,10 @@ class InputHandler(object):
                 # slow down left motor
                 self._current_motor_left_value  = self._current_motor_left_value + self._step_value
             else:
+                self._logger.warn("_is_moving_back: Near limits")
                 pass
         else:
-            raise Exception("Unknown state when turning Left")
+            raise Exception("Unknown state")
 
 
     def _turn_right(self):
@@ -324,6 +327,7 @@ class InputHandler(object):
             near_limit_left    = target_left_value >= self._max_motor_value
 
             if near_limit_left and near_limit_right:
+                self._logger.warn("_is_spinning: Near left & right limits")
                 pass
             else:
                 # speed up left motor
@@ -345,6 +349,7 @@ class InputHandler(object):
                 # slow down right motor
                 self._current_motor_right_value  = self._current_motor_right_value - self._step_value
             else:
+                self._logger.warn("_is_moving_forward: Near limits")
                 pass
 
         elif self._is_moving_back():
@@ -360,9 +365,10 @@ class InputHandler(object):
                 # slow down right motor
                 self._current_motor_right_value  = self._current_motor_right_value + self._step_value
             else:
+                self._logger.warn("_is_moving_back: Near limits")
                 pass
         else:
-            raise Exception("Unknown state when turning Right")
+            raise Exception("Unknown state")
 
 
     def _move_forward(self):
@@ -400,6 +406,7 @@ class InputHandler(object):
                     self._current_motor_right_value = self._current_motor_left_value
         else:
             if(near_limits):
+                self._logger.warn("Near limits")
                 pass
             else:
                 self._current_motor_left_value  = self._current_motor_left_value + self._step_value
@@ -440,6 +447,7 @@ class InputHandler(object):
                     self._current_motor_left_value  = self._current_motor_right_value
         else:
             if(near_limits):
+                self._logger.warn("Near limits")
                 pass
             else:
                 self._current_motor_left_value  = self._current_motor_left_value - self._step_value
